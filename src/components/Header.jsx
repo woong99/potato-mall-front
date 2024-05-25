@@ -34,7 +34,7 @@ const Header = () => {
                                     clipRule="evenodd"></path>
                             </svg>
                         </button>
-                        <a href="" className="flex ml-2 md:mr-24">
+                        <a href="#!" className="flex ml-2 md:mr-24">
                             <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                                 PotatoMall
                             </span>
@@ -453,21 +453,6 @@ const Header = () => {
                             <div className="tooltip-arrow" data-popper-arrow></div>
                         </div>
                         <div className="flex items-center ml-3">
-                            <div>
-                                <button
-                                    type="button"
-                                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                                    id="user-menu-button-2"
-                                    aria-expanded="false"
-                                    data-dropdown-toggle="dropdown-2">
-                                    <span className="sr-only">Open user menu</span>
-                                    <img
-                                        className="w-8 h-8 rounded-full"
-                                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                        alt="user photo"
-                                    />
-                                </button>
-                            </div>
                             <div
                                 className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                                 id="dropdown-2">
