@@ -14,7 +14,7 @@ const ProductPage = () => {
     };
 
     /**
-     * 상품 추가 모달 닫기
+     * 상품 모달 닫기
      */
     const closeProductModal = () => {
         setIsOpenProductModal(false);
@@ -22,7 +22,7 @@ const ProductPage = () => {
 
     return (
         <main>
-            <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <div className="w-full mb-1">
                     <div className="mb-4">
                         <nav className="flex mb-5" aria-label="Breadcrumb">
@@ -37,24 +37,14 @@ const ProductPage = () => {
                                     <div className="flex items-center">
                                         <ChevronRightIcon className="w-6 h-6 text-gray-400" />
                                         <div className="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">
-                                            E-commerce
+                                            상품 관리
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <ChevronRightIcon className="w-6 h-6 text-gray-400" />
-                                        <span
-                                            className="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
-                                            aria-current="page">
-                                            Products
-                                        </span>
                                     </div>
                                 </li>
                             </ol>
                         </nav>
                         <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                            상품 목록
+                            상품 관리
                         </h1>
                     </div>
                     <div className="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
