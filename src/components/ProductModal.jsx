@@ -1,8 +1,8 @@
-import React from 'react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Editor } from '@toast-ui/react-editor'
-import '@toast-ui/editor/dist/toastui-editor.css'
-import '@toast-ui/editor/dist/theme/toastui-editor-dark.css'
+import React from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 const ProductModal = ({ isOpenProductModal, closeProductModal }) => {
     const toolbar = [
@@ -10,7 +10,7 @@ const ProductModal = ({ isOpenProductModal, closeProductModal }) => {
         ['hr'],
         ['ul', 'ol'],
         ['link', 'image'],
-    ]
+    ];
     return (
         <div
             className={`fixed top-0 right-0 z-40 w-full h-screen max-w-3xl p-4 overflow-y-auto transition-transform ${
@@ -102,7 +102,7 @@ const ProductModal = ({ isOpenProductModal, closeProductModal }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ProductModal
+export default ProductModal;

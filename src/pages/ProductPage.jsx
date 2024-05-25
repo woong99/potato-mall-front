@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
-import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/react/16/solid'
-import ProductModal from '../components/ProductModal'
+import React, { useState } from 'react';
+import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
+import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/react/16/solid';
+import ProductModal from '../components/ProductModal';
 
 const ProductPage = () => {
-    const [isOpenProductModal, setIsOpenProductModal] = useState(false) // 상품 추가 모달 상태
+    const [isOpenProductModal, setIsOpenProductModal] = useState(false); // 상품 추가 모달 상태
 
     /**
      * 상품 추가 모달 열기
      */
     const openProductCreateModal = () => {
-        setIsOpenProductModal(true)
-    }
+        setIsOpenProductModal(true);
+    };
 
     /**
      * 상품 추가 모달 닫기
      */
     const closeProductModal = () => {
-        setIsOpenProductModal(false)
-    }
+        setIsOpenProductModal(false);
+    };
 
     return (
         <main>
@@ -309,7 +309,7 @@ const ProductPage = () => {
             )}
             {/* 상품 추가 모달 E */}
         </main>
-    )
-}
+    );
+};
 
-export default ProductPage
+export default ProductPage;

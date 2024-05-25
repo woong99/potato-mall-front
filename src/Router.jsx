@@ -1,7 +1,7 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ProductPage from './pages/ProductPage'
-import AdminLayout from './components/AdminLayout'
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProductPage from './pages/ProductPage';
+import AdminLayout from './components/AdminLayout';
 
 const Router = () => {
     return (
@@ -12,7 +12,7 @@ const Router = () => {
                 </Route>
             </Routes>
         </BrowserRouter>
-    )
-}
+    );
+};
 
-export default Router
+export default Router;
