@@ -5,6 +5,7 @@ import AdminLayout from './components/AdminLayout';
 import CategoryPage from './pages/CategoryPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import AuthPage from './pages/AuthPage';
 
 const Router = () => {
     return (
@@ -13,6 +14,7 @@ const Router = () => {
                 <Route element={<AdminLayout />}>
                     <Route path="/product" element={<ProductPage />} />
                     <Route path="/category" element={<CategoryPage />} />
+                    <Route path="/auth" element={<AuthPage />} />
                 </Route>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="*" element={<NotFoundPage />} />
