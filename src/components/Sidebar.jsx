@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Cog8ToothIcon, TableCellsIcon } from '@heroicons/react/24/solid';
+import { Cog8ToothIcon, LockClosedIcon, TableCellsIcon } from '@heroicons/react/24/solid';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -23,6 +23,19 @@ const Sidebar = () => {
                     <div className="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
                         <div className="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                             <ul className="pb-2 space-y-2">
+                                <li>
+                                    <button
+                                        type="button"
+                                        className={`flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 ${
+                                            pathname === 'auth' && 'dark:bg-gray-700'
+                                        }`}
+                                        onClick={() => navigate('/auth')}>
+                                        <LockClosedIcon className="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+                                        <span className="flex-1 ml-3 text-left whitespace-nowrap">
+                                            계정 관리
+                                        </span>
+                                    </button>
+                                </li>
                                 <li>
                                     <button
                                         type="button"
