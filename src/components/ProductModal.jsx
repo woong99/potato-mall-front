@@ -1,8 +1,5 @@
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 const ProductModal = ({ isOpenProductModal, closeProductModal }) => {
     const toolbar = [
@@ -79,12 +76,12 @@ const ProductModal = ({ isOpenProductModal, closeProductModal }) => {
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         상품설명 *
                     </label>
-                    <Editor
-                        initialEditType="wysiwyg"
-                        toolbarItems={toolbar}
-                        hideModeSwitch
-                        theme="dark"
-                    />
+                    {/*<Editor*/}
+                    {/*    initialEditType="wysiwyg"*/}
+                    {/*    toolbarItems={toolbar}*/}
+                    {/*    hideModeSwitch*/}
+                    {/*    theme="dark"*/}
+                    {/*/>*/}
                 </div>
                 <div className="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">
                     <button

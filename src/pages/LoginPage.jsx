@@ -1,6 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import { setAccessToken } from '../store/slice/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+    const [id, setId] = useState(''); // 아이디
+    const [password, setPassword] = useState(''); // 비밀번호
+    const [cookies, setCookie] = useCookies(['refreshToken']);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // 로그인
+    const login = async (e) => {
+        e.preventDefault();
+        if (!id) {
+            await Swal.fire({ icon: 'warning', text: '아이디를 입력해주세요.' });
+            return;
+        }
+
+        if (!password) {
+            await Swal.fire({ icon: 'warning', text: '비밀번호를 입력해주세요.' });
+            return;
+        }
+
+        try {
+            const res = await axios.post('http://localhost:8080/api/admin/login', {
+                id,
+                password,
+            });
+
+            // 운영 환경에 따라 쿠키 설정
+            const refreshToken = res.data.data.refreshTokenDto.token;
+            const tokenExpiresIn = new Date(res.data.data.refreshTokenDto.tokenExpiresIn);
+            if (window.location.hostname === 'localhost') {
+                setCookie('refreshToken', refreshToken, {
+                    expires: tokenExpiresIn,
+                });
+            } else {
+                setCookie('refreshToken', refreshToken, {
+                    expires: tokenExpiresIn,
+                    secure: true,
+                    httpOnly: true,
+                    sameSite: 'None',
+                });
+            }
+
+            dispatch(setAccessToken(res.data.data.accessTokenDto.token));
+            navigate('/auth');
+        } catch (error) {
+            await Swal.fire({ icon: 'error', text: error.response.data.message });
+        }
+    };
+
     return (
         <main className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-4 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
@@ -22,7 +76,10 @@ const LoginPage = () => {
                                 id="email"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="아이디를 입력해주세요."
-                                required=""
+                                value={id}
+                                onChange={(e) => {
+                                    setId(e.target.value);
+                                }}
                             />
                         </div>
                         <div className="mt-6">
@@ -37,11 +94,15 @@ const LoginPage = () => {
                                 id="password"
                                 placeholder="••••••••"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                required=""
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
                             />
                         </div>
                         <button
                             type="button"
+                            onClick={login}
                             className="mt-10 w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             로그인
                         </button>

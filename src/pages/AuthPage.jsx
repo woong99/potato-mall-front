@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/react/16/solid';
 import AuthModal from '../components/AuthModal';
 import Breadcrumb from '../components/Breadcrumb';
+import { api } from '../hooks/useAxiosInterceptor';
 
 const AuthPage = () => {
     const [isOpenAuthModal, setIsOpenAuthModal] = useState(false); // 상품 추가 모달 상태
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await api.get('/api/admin/admin-management/search');
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
 
     /**
      * 계정 추가 모달 열기

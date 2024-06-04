@@ -1,5 +1,14 @@
+import { useAxiosInterceptor } from './hooks/useAxiosInterceptor';
+import Router from './route/Router';
+
 function App() {
-    return <></>;
+    useAxiosInterceptor();
+
+    return (
+        <>
+            <Router />
+        </>
+    );
 }
 
 export default App;
