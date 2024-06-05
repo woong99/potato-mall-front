@@ -13,9 +13,11 @@ const NoAuthRoute = () => {
         (async () => {
             if (!accessToken) {
                 try {
-                    const res = await axios.get('http://localhost:8080/api/admin/refresh', {
-                        withCredentials: 'true',
-                    });
+                    const res = await axios.post(
+                        'http://localhost:8080/api/admin/refresh',
+                        {},
+                        { withCredentials: 'true' },
+                    );
                     dispatch(setAccessToken(res.data.data.token));
                     setIsAuthenticated(true);
                 } catch (error) {
