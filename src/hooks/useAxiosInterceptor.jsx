@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const api = axios.create({
     baseURL: 'http://localhost:8080',
@@ -22,10 +23,12 @@ const useAxiosInterceptor = () => {
         return response;
     };
 
-    const responseErrorHandler = (error) => {
+    const responseErrorHandler = async (error) => {
         // TODO : 추가 예외 처리
         if (error.response.status === 401) {
             window.location.href = '/login';
+        } else {
+            await Swal.fire({ icon: 'error', text: error.response.data.message });
         }
         return Promise.reject(error);
     };
