@@ -29,7 +29,7 @@ const Sidebar = () => {
                                         className={`flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 ${
                                             pathname === 'auth' && 'dark:bg-gray-700'
                                         }`}
-                                        onClick={() => navigate('/auth')}>
+                                        onClick={() => navigate('/admin/auth')}>
                                         <LockClosedIcon className="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                                         <span className="flex-1 ml-3 text-left whitespace-nowrap">
                                             계정 관리
@@ -42,7 +42,7 @@ const Sidebar = () => {
                                         className={`flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 ${
                                             pathname === 'product' && 'dark:bg-gray-700'
                                         }`}
-                                        onClick={() => navigate('/product')}>
+                                        onClick={() => navigate('/admin/product')}>
                                         <TableCellsIcon className="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                                         <span className="flex-1 ml-3 text-left whitespace-nowrap">
                                             상품 관리
@@ -55,7 +55,7 @@ const Sidebar = () => {
                                         className={`flex items-center w-full p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ${
                                             pathname === 'category' && 'dark:bg-gray-700'
                                         }`}
-                                        onClick={() => navigate('/category')}>
+                                        onClick={() => navigate('/admin/category')}>
                                         <Cog8ToothIcon className="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                                         <span className="ml-3">카테고리 설정</span>
                                     </button>

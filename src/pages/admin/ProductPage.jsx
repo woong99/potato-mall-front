@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/react/16/solid';
-import ProductModal from '../components/ProductModal';
-import Breadcrumb from '../components/Breadcrumb';
+import ProductModal from '../../components/admin/ProductModal';
+import Breadcrumb from '../../components/admin/Breadcrumb';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { api } from '../hooks/useAxiosInterceptor';
-import Pagination from '../components/Pagination';
+import { api } from '../../hooks/useAxiosInterceptor';
+import Pagination from '../../components/Pagination';
 import Swal from 'sweetalert2';
 
 const ProductPage = () => {
@@ -157,7 +157,7 @@ const ProductPage = () => {
      */
     const prevPage = (prevPage) => {
         if (prevPage > 0) {
-            let url = `/product?page=${prevPage}`;
+            let url = `/admin/product?page=${prevPage}`;
             if (searchWord) {
                 url += `&searchWord=${searchWord}`;
             }
@@ -170,7 +170,7 @@ const ProductPage = () => {
      */
     const nextPage = (nextPage) => {
         if (paginationInfo.nowPage * 10 < paginationInfo.totalElements) {
-            let url = `/product?page=${nextPage}`;
+            let url = `/admin/product?page=${nextPage}`;
             if (searchWord) {
                 url += `&searchWord=${searchWord}`;
             }
@@ -182,7 +182,7 @@ const ProductPage = () => {
      * 검색
      */
     const search = () => {
-        navigate(`/product?page=1&searchWord=${searchWord}`);
+        navigate(`/admin/product?page=1&searchWord=${searchWord}`);
     };
 
     /**
@@ -272,7 +272,7 @@ const ProductPage = () => {
                 })
                     .then(() => {
                         Swal.fire({ icon: 'success', text: '상품이 등록되었습니다.' });
-                        navigate('/product?page=1');
+                        navigate('/admin/product?page=1');
                     })
                     .catch((error) => {
                         console.log(error);
@@ -372,7 +372,7 @@ const ProductPage = () => {
                 })
                     .then(() => {
                         Swal.fire({ icon: 'success', text: '상품이 수정되었습니다.' });
-                        navigate('/product?page=1');
+                        navigate('/admin/product?page=1');
                     })
                     .catch((error) => {
                         console.log(error);
@@ -396,7 +396,7 @@ const ProductPage = () => {
                 api.delete(`/api/admin/product/${productId}`)
                     .then(() => {
                         Swal.fire({ icon: 'success', text: '상품이 삭제되었습니다.' });
-                        navigate('/product?page=1');
+                        navigate('/admin/product?page=1');
                     })
                     .catch((error) => {
                         console.log(error);

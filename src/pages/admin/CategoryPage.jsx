@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/react/16/solid';
-import CategoryModal from '../components/CategoryModal';
-import Breadcrumb from '../components/Breadcrumb';
+import CategoryModal from '../../components/admin/CategoryModal';
+import Breadcrumb from '../../components/admin/Breadcrumb';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { api } from '../hooks/useAxiosInterceptor';
-import Pagination from '../components/Pagination';
+import { api } from '../../hooks/useAxiosInterceptor';
+import Pagination from '../../components/Pagination';
 import Swal from 'sweetalert2';
 
 const CategoryPage = () => {
@@ -108,7 +108,7 @@ const CategoryPage = () => {
      */
     const prevPage = (prevPage) => {
         if (prevPage > 0) {
-            let url = `/category?page=${prevPage}`;
+            let url = `/admin/category?page=${prevPage}`;
             if (searchWord) {
                 url += `&searchWord=${searchWord}`;
             }
@@ -121,7 +121,7 @@ const CategoryPage = () => {
      */
     const nextPage = (nextPage) => {
         if (paginationInfo.nowPage * 10 < paginationInfo.totalElements) {
-            let url = `/category?page=${nextPage}`;
+            let url = `/admin/category?page=${nextPage}`;
             if (searchWord) {
                 url += `&searchWord=${searchWord}`;
             }
@@ -133,7 +133,7 @@ const CategoryPage = () => {
      * 검색
      */
     const search = () => {
-        navigate(`/category?page=1&searchWord=${searchWord}`);
+        navigate(`/admin/category?page=1&searchWord=${searchWord}`);
     };
 
     /**
@@ -174,7 +174,7 @@ const CategoryPage = () => {
                 api.post('/api/admin/product-category', formData)
                     .then(() => {
                         Swal.fire({ icon: 'success', text: '카테고리가 등록되었습니다.' });
-                        navigate('/category?page=1');
+                        navigate('/admin/category?page=1');
                     })
                     .catch((error) => {
                         console.log(error);
@@ -218,7 +218,7 @@ const CategoryPage = () => {
                 })
                     .then(() => {
                         Swal.fire({ icon: 'success', text: '카테고리가 수정되었습니다.' });
-                        navigate('/category?page=1');
+                        navigate('/admin/category?page=1');
                     })
                     .catch((error) => {
                         console.log(error);
@@ -245,7 +245,7 @@ const CategoryPage = () => {
                 api.delete(`/api/admin/product-category/${categoryId}`)
                     .then(() => {
                         Swal.fire({ icon: 'success', text: '카테고리가 삭제되었습니다.' });
-                        navigate('/category?page=1');
+                        navigate('/admin/category?page=1');
                     })
                     .catch((error) => {
                         console.log(error);

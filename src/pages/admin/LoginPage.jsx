@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import { setAccessToken } from '../store/slice/authSlice';
+import { setAccessToken } from '../../store/slice/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -49,7 +49,7 @@ const LoginPage = () => {
             }
 
             dispatch(setAccessToken(res.data.data.accessTokenDto.token));
-            navigate('/auth');
+            navigate('/admin/auth');
         } catch (error) {
             await Swal.fire({ icon: 'error', text: error.response.data.message });
         }

@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProductPage from '../pages/ProductPage';
-import AdminLayout from '../components/AdminLayout';
-import CategoryPage from '../pages/CategoryPage';
-import LoginPage from '../pages/LoginPage';
+import ProductPage from '../pages/admin/ProductPage';
+import AdminLayout from '../components/admin/AdminLayout';
+import CategoryPage from '../pages/admin/CategoryPage';
+import LoginPage from '../pages/admin/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import AuthPage from '../pages/AuthPage';
+import AuthPage from '../pages/admin/AuthPage';
 import PrivateRoute from './PrivateRoute';
 import NoAuthRoute from './NoAuthRoute';
+import MainPage from '../pages/MainPage';
 
 const Router = () => {
     return (
@@ -15,14 +16,15 @@ const Router = () => {
             <Routes>
                 <Route element={<PrivateRoute />}>
                     <Route element={<AdminLayout />}>
-                        <Route path="/product" element={<ProductPage />} />
-                        <Route path="/category" element={<CategoryPage />} />
-                        <Route path="/auth" element={<AuthPage />} />
+                        <Route path="/admin/product" element={<ProductPage />} />
+                        <Route path="/admin/category" element={<CategoryPage />} />
+                        <Route path="/admin/auth" element={<AuthPage />} />
                     </Route>
                 </Route>
                 <Route element={<NoAuthRoute />}>
-                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/admin/login" element={<LoginPage />} />
                 </Route>
+                <Route path="/" element={<MainPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
