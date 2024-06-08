@@ -10,3 +10,90 @@ input:-webkit-autofill:active {
   -webkit-transition: background-color 9999s ease-out;
   -webkit-text-fill-color: #fff !important;
 }
+
+/* react-select 다크모드 CSS S */
+.react-select-dark__control {
+  border-radius: 0.5rem !important;
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity)) !important;
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity)) !important;
+}
+
+.react-select-dark__single-value {
+  color: white !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.react-select-dark__input {
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0) !important;
+  color: white !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.react-select-dark__placeholder {
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0) !important;
+  color: #9CA3AF !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.react-select-dark__menu {
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity)) !important;
+}
+
+.react-select-dark__option {
+  color: white !important;
+}
+
+/* react-select 다크모드 CSS E */
+
+/*react-quill-editor CSS S */
+.ql-editor {
+  color: white !important;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity)) !important;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity)) !important;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  color: #9CA3AF !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-style: normal !important;
+}
+
+.ql-picker-label {
+  color: white !important;
+}
+
+.ql-stroke {
+  stroke: white !important;
+}
+
+.ql-active .ql-stroke {
+  stroke: black !important;
+}
+
+.ql-picker-options {
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity)) !important;
+  color: white !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: center !important;
+}
+
+.ql-picker-item:hover {
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity)) !important;
+  color: white !important;
+}
+
+.ql-selected {
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity)) !important;
+  color: white !important;
+}
+
+/*react-quill-editor CSS E */
