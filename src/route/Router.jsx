@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import NoAuthRoute from './NoAuthRoute';
 import MainPage from '../pages/user/MainPage';
 import UserLayout from '../components/user/UserLayout';
+import ProductsPage from '../pages/user/ProductsPage';
 
 const Router = () => {
     return (
@@ -27,6 +28,7 @@ const Router = () => {
                 </Route>
                 <Route element={<UserLayout />}>
                     <Route path="/" element={<MainPage />} />
+                    <Route path="/products" element={<ProductsPage />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

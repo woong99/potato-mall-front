@@ -154,4 +154,13 @@ input:-webkit-autofill:active {
   background-color: black;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 /* User Page CSS E */

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa6';
 import { FaSearch } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const navigate = useNavigate();
 
     /**
      * 검색 input focus 이벤트 처리
@@ -40,8 +42,10 @@ const Header = () => {
                     <nav>
                         <ul className="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
                             <li>
-                                <p className="inline-block no-underline hover:text-black hover:underline py-2 px-4 cursor-pointer">
-                                    Shop
+                                <p
+                                    className="inline-block no-underline hover:text-black hover:underline py-2 px-4 cursor-pointer"
+                                    onClick={() => navigate('/products')}>
+                                    Products
                                 </p>
                             </li>
                             <li>
@@ -54,7 +58,9 @@ const Header = () => {
                 </div>
 
                 <div className="order-2 md:order-2">
-                    <span className="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl ">
+                    <span
+                        className="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl cursor-pointer"
+                        onClick={() => navigate('/')}>
                         <img src="/images/logo.svg" alt="logo" />
                         Potato Mall
                     </span>
@@ -69,7 +75,7 @@ const Header = () => {
                         onFocus={() => handleSearchFocus(true)}
                         onBlur={() => handleSearchFocus(false)}
                     />
-                    <FaSearch className="absolute right-0 top-0 mt-3 mr-3" />
+                    <FaSearch className="absolute right-0 top-0 mt-3 mr-3 cursor-pointer" />
                     {showSuggestions && (
                         <ul className="w-full absolute right-0 bg-white text-gray-500 border z-50 rounded-md">
                             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어1</li>
@@ -101,7 +107,7 @@ const Header = () => {
                     onFocus={() => handleSearchFocus(true)}
                     onBlur={() => handleSearchFocus(false)}
                 />
-                <FaSearch className="absolute right-6 top-0 mt-3 mr-3" />
+                <FaSearch className="absolute right-6 top-0 mt-3 mr-3 cursor-pointer" />
                 {showSuggestions && (
                     <ul
                         className="absolute   bg-white text-gray-500 border z-50 rounded-md"
