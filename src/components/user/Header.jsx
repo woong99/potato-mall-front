@@ -1,0 +1,127 @@
+import React, { useState } from 'react';
+import { FaUser } from 'react-icons/fa6';
+import { FaSearch } from 'react-icons/fa';
+
+const Header = () => {
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    /**
+     * 검색 input focus 이벤트 처리
+     */
+    const handleSearchFocus = (flag) => {
+        if (flag) {
+            setShowSuggestions(true);
+        } else {
+            setTimeout(() => {
+                setShowSuggestions(false);
+            }, 100);
+        }
+    };
+
+    return (
+        <nav id="header" className="w-full z-30 top-0 py-1">
+            <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-5">
+                <label htmlFor="menu-toggle" className="cursor-pointer md:hidden block">
+                    <svg
+                        className="fill-current text-gray-900"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20">
+                        <title>menu</title>
+                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                    </svg>
+                </label>
+                <input className="hidden" type="checkbox" id="menu-toggle" />
+
+                <div
+                    className="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1"
+                    id="menu">
+                    <nav>
+                        <ul className="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
+                            <li>
+                                <p className="inline-block no-underline hover:text-black hover:underline py-2 px-4 cursor-pointer">
+                                    Shop
+                                </p>
+                            </li>
+                            <li>
+                                <p className="inline-block no-underline hover:text-black hover:underline py-2 px-4 cursor-pointer">
+                                    MyPage
+                                </p>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div className="order-2 md:order-2">
+                    <span className="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl ">
+                        <img src="/images/logo.svg" alt="logo" />
+                        Potato Mall
+                    </span>
+                </div>
+
+                {/* Desktop Search S */}
+                <div className="order-3 w-1/2 hidden md:block relative">
+                    <input
+                        type="text"
+                        placeholder="찾고 싶은 상품을 검색해보세요!"
+                        className="border border-gray-300 rounded-md w-full focus:outline-none focus:border-gray-500 focus:shadow-none focus:ring-0"
+                        onFocus={() => handleSearchFocus(true)}
+                        onBlur={() => handleSearchFocus(false)}
+                    />
+                    <FaSearch className="absolute right-0 top-0 mt-3 mr-3" />
+                    {showSuggestions && (
+                        <ul className="w-full absolute right-0 bg-white text-gray-500 border z-50 rounded-md">
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어1</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어2</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어3</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어4</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어5</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어6</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어7</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어8</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어9</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어10</li>
+                        </ul>
+                    )}
+                </div>
+                {/* Desktop Search E */}
+
+                <div className="order-2 md:order-3 flex items-center" id="nav-content">
+                    <FaUser className="cursor-pointer w-5 h-5" />
+                </div>
+            </div>
+
+            {/* Mobile Search S */}
+            <div className="order-2 md:hidden px-6 mb-5 relative">
+                <input
+                    type="text"
+                    placeholder="찾고 싶은 상품을 검색해보세요!"
+                    className="border border-gray-300 rounded-md w-full focus:outline-none focus:border-gray-500 focus:shadow-none focus:ring-0"
+                    onFocus={() => handleSearchFocus(true)}
+                    onBlur={() => handleSearchFocus(false)}
+                />
+                <FaSearch className="absolute right-6 top-0 mt-3 mr-3" />
+                {showSuggestions && (
+                    <ul
+                        className="absolute   bg-white text-gray-500 border z-50 rounded-md"
+                        style={{ width: 'calc(100% - 3rem)' }}>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어1</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어2</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어3</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어4</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어5</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어6</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어7</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어8</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어9</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어10</li>
+                    </ul>
+                )}
+            </div>
+            {/* Mobile Search E */}
+        </nav>
+    );
+};
+
+export default Header;

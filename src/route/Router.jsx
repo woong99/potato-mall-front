@@ -8,7 +8,8 @@ import NotFoundPage from '../pages/NotFoundPage';
 import AuthPage from '../pages/admin/AuthPage';
 import PrivateRoute from './PrivateRoute';
 import NoAuthRoute from './NoAuthRoute';
-import MainPage from '../pages/MainPage';
+import MainPage from '../pages/user/MainPage';
+import UserLayout from '../components/user/UserLayout';
 
 const Router = () => {
     return (
@@ -24,7 +25,9 @@ const Router = () => {
                 <Route element={<NoAuthRoute />}>
                     <Route path="/admin/login" element={<LoginPage />} />
                 </Route>
-                <Route path="/" element={<MainPage />} />
+                <Route element={<UserLayout />}>
+                    <Route path="/" element={<MainPage />} />
+                </Route>
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
