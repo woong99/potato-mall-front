@@ -164,3 +164,14 @@ input:-webkit-autofill:active {
 }
 
 /* User Page CSS E */
+
+/* React Paginate S */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+/* React Paginate E */
