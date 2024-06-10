@@ -14,7 +14,7 @@ const NoAuthRoute = () => {
             if (!accessToken) {
                 try {
                     const res = await axios.post(
-                        'http://localhost:8080/api/admin/refresh',
+                        `${process.env.REACT_APP_API_URL}/api/admin/refresh`,
                         {},
                         { withCredentials: 'true' },
                     );

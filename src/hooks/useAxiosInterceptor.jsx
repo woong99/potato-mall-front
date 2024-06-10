@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true,
 });
 

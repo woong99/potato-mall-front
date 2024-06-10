@@ -27,7 +27,7 @@ const LoginPage = () => {
         }
 
         try {
-            const res = await axios.post('http://localhost:8080/api/admin/login', {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/admin/login`, {
                 id,
                 password,
             });
