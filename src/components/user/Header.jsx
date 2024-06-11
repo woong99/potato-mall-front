@@ -137,8 +137,16 @@ const Header = () => {
                     className="border border-gray-300 rounded-md w-full focus:outline-none focus:border-gray-500 focus:shadow-none focus:ring-0"
                     onFocus={() => handleSearchFocus(true)}
                     onBlur={() => handleSearchFocus(false)}
+                    onChange={(e) => setSearchWord(e.target.value)}
+                    onCompositionStart={() => setIsComposing(true)}
+                    onCompositionEnd={() => setIsComposing(false)}
+                    onKeyDown={handleEnter}
+                    value={searchWord}
                 />
-                <FaSearch className="absolute right-6 top-0 mt-3 mr-3 cursor-pointer" />
+                <FaSearch
+                    className="absolute right-6 top-0 mt-3 mr-3 cursor-pointer"
+                    onClick={search}
+                />
                 {showSuggestions && (
                     <ul
                         className="absolute   bg-white text-gray-500 border z-50 rounded-md"
