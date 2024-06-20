@@ -11,6 +11,7 @@ import NoAuthRoute from './NoAuthRoute';
 import MainPage from '../pages/user/MainPage';
 import UserLayout from '../components/user/UserLayout';
 import ProductsPage from '../pages/user/ProductsPage';
+import ProductDetailPage from '../pages/user/ProductDetailPage';
 
 const Router = () => {
     return (
@@ -29,6 +30,7 @@ const Router = () => {
                 <Route element={<UserLayout />}>
                     <Route path="/" element={<MainPage />} />
                     <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/product/:id" element={<ProductDetailPage />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

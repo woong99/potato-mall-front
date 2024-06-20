@@ -224,6 +224,7 @@ const ProductsPage = () => {
                                     className="hover:grow hover:shadow-lg cursor-pointer"
                                     src={product.thumbnailUrl || '/images/no-img.png'}
                                     style={{ minWidth: '300px' }}
+                                    onClick={() => navigate(`/product/${product.productId}`)}
                                     alt="상품 이미지"
                                 />
                                 <div className="pt-3 flex items-center justify-between">
