@@ -12,6 +12,7 @@ const ProductsPage = () => {
     const [isMobile, setIsMobile] = useState(false); // 모바일 여부
     const [sortCondition, setSortCondition] = useState(''); // 정렬 조건
     const [nowPage, setNowPage] = useState(1); // 현재 페이지
+    const [relatedTerms, setRelatedTerms] = useState([]); // 연관 검색어 목록
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
@@ -39,6 +40,8 @@ const ProductsPage = () => {
             setNowPage(page === '' ? 1 : Number(page));
 
             await fetchProductList(page, nowSearchWord, nowSortCondition);
+
+            await fetchRelatedTerms(nowSearchWord);
         })();
     }, [location]);
 
@@ -67,6 +70,17 @@ const ProductsPage = () => {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    /**
+     * 연관 검색어 조회
+     */
+    const fetchRelatedTerms = async (searchWord) => {
+        if (!searchWord) {
+            return;
+        }
+        const res = await api.get('api/product/search-with-auto-complete?searchWord=' + searchWord);
+        setRelatedTerms(res.data.data.filter((d) => d.name !== searchWord));
     };
 
     /**
@@ -130,20 +144,25 @@ const ProductsPage = () => {
                             <div
                                 className="text-sm w-full flex mt-4"
                                 style={{ maxWidth: 'calc(100vw - 3rem)' }}>
-                                <p className="whitespace-nowrap pr-2">연관검색어 : </p>
-                                <div className="text-blue-500 cursor-pointer overflow-x-auto whitespace-nowrap no-scrollbar w-full">
-                                    <span className="ml-2">왕감자</span>
-                                    <span className="ml-2">대왕감자</span>
-                                    <span className="ml-2">회오리감자</span>
-                                    <span className="ml-2">와사비감자</span>
-                                    <span className="ml-2">슈퍼감자</span>
-                                    <span className="ml-2">대홍단감자</span>
-                                    <span className="ml-2">대홍단감자</span>
-                                    <span className="ml-2">대홍단감자</span>
-                                    <span className="ml-2">대홍단감자</span>
-                                    <span className="ml-2">대홍단감자</span>
-                                    <span className="ml-2">대홍단감자</span>
-                                </div>
+                                {relatedTerms.length > 0 && (
+                                    <>
+                                        <p className="whitespace-nowrap pr-2">연관검색어 : </p>
+                                        <div className="text-blue-500 cursor-pointer overflow-x-auto whitespace-nowrap no-scrollbar w-full">
+                                            {relatedTerms.map((term) => (
+                                                <span
+                                                    className="ml-2"
+                                                    key={term.name}
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `/products?searchWord=${term.name}`,
+                                                        )
+                                                    }>
+                                                    {term.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         )}
 
