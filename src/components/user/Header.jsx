@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa6';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../../hooks/useAxiosInterceptor';
 
 const Header = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const navigate = useNavigate();
     const [searchWord, setSearchWord] = useState(''); // 검색어
     const [isComposing, setIsComposing] = useState(false); // 컴포징을 위한 상태
+    const [suggestions, setSuggestions] = useState([]); // 검색어 추천 목록
 
     /**
      * 검색 input focus 이벤트 처리
@@ -29,6 +31,7 @@ const Header = () => {
         navigate(`/products?searchWord=${searchWord}`);
         setSearchWord('');
         setShowSuggestions(false);
+        setSuggestions([]);
     };
 
     /**
@@ -41,6 +44,31 @@ const Header = () => {
             }
             search();
         }
+    };
+
+    /**
+     * 검색어 추천 목록 조회
+     */
+    const handleSearch = async () => {
+        if (!searchWord || !searchWord.trim()) {
+            setSuggestions([]);
+            return;
+        }
+
+        const res = await api.get(
+            `/api/product/search-with-auto-complete?searchWord=${searchWord}`,
+        );
+        setSuggestions(res.data.data);
+    };
+
+    /**
+     * 추천 검색어 클릭 시 검색
+     */
+    const handleSuggestion = (searchWord) => {
+        navigate(`/products?searchWord=${searchWord}`);
+        setSearchWord('');
+        setShowSuggestions(false);
+        setSuggestions([]);
     };
 
     return (
@@ -99,6 +127,7 @@ const Header = () => {
                         onBlur={() => handleSearchFocus(false)}
                         onChange={(e) => setSearchWord(e.target.value)}
                         onKeyDown={handleEnter}
+                        onKeyUp={handleSearch}
                         onCompositionStart={() => setIsComposing(true)}
                         onCompositionEnd={() => setIsComposing(false)}
                         value={searchWord}
@@ -109,16 +138,14 @@ const Header = () => {
                     />
                     {showSuggestions && (
                         <ul className="w-full absolute right-0 bg-white text-gray-500 border z-50 rounded-md">
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어1</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어2</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어3</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어4</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어5</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어6</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어7</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어8</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어9</li>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어10</li>
+                            {suggestions?.map((suggestion) => (
+                                <li
+                                    key={suggestion.name}
+                                    className={'px-4 py-2 hover:bg-gray-100 cursor-pointer'}
+                                    onClick={() => handleSuggestion(suggestion.name)}>
+                                    {suggestion.name}
+                                </li>
+                            ))}
                         </ul>
                     )}
                 </div>
@@ -141,6 +168,7 @@ const Header = () => {
                     onCompositionStart={() => setIsComposing(true)}
                     onCompositionEnd={() => setIsComposing(false)}
                     onKeyDown={handleEnter}
+                    onKeyUp={handleSearch}
                     value={searchWord}
                 />
                 <FaSearch
@@ -151,16 +179,14 @@ const Header = () => {
                     <ul
                         className="absolute   bg-white text-gray-500 border z-50 rounded-md"
                         style={{ width: 'calc(100% - 3rem)' }}>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어1</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어2</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어3</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어4</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어5</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어6</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어7</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어8</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어9</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">검색어10</li>
+                        {suggestions?.map((suggestion) => (
+                            <li
+                                key={suggestion.name}
+                                className={'px-4 py-2 hover:bg-gray-100 cursor-pointer'}
+                                onClick={() => handleSuggestion(suggestion.name)}>
+                                {suggestion.name}
+                            </li>
+                        ))}
                     </ul>
                 )}
             </div>
