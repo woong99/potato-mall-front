@@ -4,6 +4,7 @@ import ProductPage from '../pages/admin/ProductPage';
 import AdminLayout from '../components/admin/AdminLayout';
 import CategoryPage from '../pages/admin/CategoryPage';
 import LoginPage from '../pages/admin/LoginPage';
+import UserLoginPage from '../pages/user/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AuthPage from '../pages/admin/AuthPage';
 import PrivateRoute from './PrivateRoute';
@@ -26,6 +27,7 @@ const Router = () => {
                 </Route>
                 <Route element={<NoAuthRoute />}>
                     <Route path="/admin/login" element={<LoginPage />} />
+                    <Route path="/login" element={<UserLoginPage />} />
                 </Route>
                 <Route element={<UserLayout />}>
                     <Route path="/" element={<MainPage />} />

@@ -2,13 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-transition: background-color 9999s ease-out;
+  -webkit-text-fill-color: #fff !important;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-transition: background-color 9999s ease-out;
-  -webkit-text-fill-color: #fff !important;
+  -webkit-text-fill-color: #000 !important;
 }
 
 /* react-select 다크모드 CSS S */

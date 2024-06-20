@@ -151,7 +151,9 @@ const Header = () => {
                 </div>
                 {/* Desktop Search E */}
 
-                <div className="order-2 md:order-3 flex items-center" id="nav-content">
+                <div
+                    className="order-2 md:order-3 flex items-center"
+                    onClick={() => navigate('/login')}>
                     <FaUser className="cursor-pointer w-5 h-5" />
                 </div>
             </div>
