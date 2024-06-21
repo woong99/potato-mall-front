@@ -13,6 +13,7 @@ import MainPage from '../pages/user/MainPage';
 import UserLayout from '../components/user/UserLayout';
 import ProductsPage from '../pages/user/ProductsPage';
 import ProductDetailPage from '../pages/user/ProductDetailPage';
+import OAuth2LoginSuccessPage from '../pages/user/OAuth2LoginSuccessPage';
 
 const Router = () => {
     return (
@@ -27,7 +28,6 @@ const Router = () => {
                 </Route>
                 <Route element={<NoAuthRoute />}>
                     <Route path="/admin/login" element={<LoginPage />} />
-                    <Route path="/login" element={<UserLoginPage />} />
                 </Route>
                 <Route element={<UserLayout />}>
                     <Route path="/" element={<MainPage />} />
@@ -35,6 +35,8 @@ const Router = () => {
                     <Route path="/product/:id" element={<ProductDetailPage />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
+                <Route path="/login" element={<UserLoginPage />} />
+                <Route path="/oauth2-login-success" element={<OAuth2LoginSuccessPage />} />
             </Routes>
         </BrowserRouter>
     );

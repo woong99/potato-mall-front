@@ -1,6 +1,17 @@
 import React from 'react';
 
 const LoginPage = () => {
+    const snsLogin = (provider) => {
+        let url = '';
+        if (provider === 'NAVER') {
+            url = `${process.env.REACT_APP_API_URL}/oauth2/authorization/naver`;
+        } else if (provider === 'KAKAO') {
+            url = `${process.env.REACT_APP_API_URL}/oauth2/authorization/kakao`;
+        } else if (provider === 'GOOGLE') {
+            url = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
+        }
+        window.location.href = url;
+    };
     return (
         <main className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
             <div className="flex flex-col items-center justify-center w-full px-4 py-8 mx-auto sm:max-w-md md:h-screen pt-8 md:pt-0 dark:bg-gray-900">
@@ -57,16 +68,19 @@ const LoginPage = () => {
                                 src="/images/naver-login.png"
                                 alt="네이버 로그인"
                                 className="h-10 w-10 cursor-pointer"
+                                onClick={() => snsLogin('NAVER')}
                             />
                             <img
                                 src="/images/kakao-login.webp"
                                 alt="카카오 로그인"
                                 className="h-10 w-10 cursor-pointer"
+                                onClick={() => snsLogin('KAKAO')}
                             />
                             <img
                                 src="/images/google-login.svg"
                                 alt="구글 로그인"
                                 className="h-10 w-10 cursor-pointer"
+                                onClick={() => snsLogin('GOOGLE')}
                             />
                         </div>
                     </div>
