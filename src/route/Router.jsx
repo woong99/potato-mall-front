@@ -15,6 +15,7 @@ import ProductsPage from '../pages/user/ProductsPage';
 import ProductDetailPage from '../pages/user/ProductDetailPage';
 import OAuth2LoginSuccessPage from '../pages/user/OAuth2LoginSuccessPage';
 import UserNoAuthRoute from './UserNoAuthRoute';
+import SignUpPage from '../pages/user/SignUpPage';
 
 const Router = () => {
     return (
@@ -38,6 +39,7 @@ const Router = () => {
                 <Route path="*" element={<NotFoundPage />} />
                 <Route element={<UserNoAuthRoute />}>
                     <Route path="/login" element={<UserLoginPage />} />
+                    <Route path="/sign-up" element={<SignUpPage />} />
                 </Route>
                 <Route path="/oauth2-login-success" element={<OAuth2LoginSuccessPage />} />
             </Routes>

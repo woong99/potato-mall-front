@@ -1,6 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+    const navigate = useNavigate();
+
+    /**
+     * SNS 로그인
+     */
     const snsLogin = (provider) => {
         let url = '';
         if (provider === 'NAVER') {
@@ -62,6 +68,12 @@ const LoginPage = () => {
                             // onClick={login}
                             className="mt-10 w-full px-5 py-3 text-base font-medium text-center text-white bg-orange-300 rounded-lg hover:bg-orange-400 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             로그인
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/sign-up')}
+                            className="mt-3 w-full px-5 py-3 text-base font-medium text-center text-white bg-orange-300 rounded-lg hover:bg-orange-400 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            회원가입
                         </button>
                         <div className="flex justify-around mt-6">
                             <img
