@@ -6,34 +6,47 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const UserNoAuthRoute = () => {
     const accessToken = useSelector((state) => state.auth.userAccessToken);
+    const expiresIn = useSelector((state) => state.auth.userExpiresIn);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
-            await checkISAuthenticated();
+            await checkIsAuthenticated();
         })();
     }, []);
 
     /**
      * 로그인 여부 확인
      */
-    const checkISAuthenticated = async () => {
+    const checkIsAuthenticated = async () => {
         if (accessToken) {
-            setIsAuthenticated(true);
-        } else {
-            try {
-                const res = await axios.post(
-                    // TODO : Access Token 재발급 URL 변경
-                    `${process.env.REACT_APP_API_URL}/api/admin/refresh`,
-                    {},
-                    { withCredentials: true },
-                );
-                dispatch(setUserAccessToken(res.data.data.token));
+            const tokenExpireTime = new Date(expiresIn);
+            const currentTime = new Date();
+            if (tokenExpireTime < currentTime) {
+                await fetchAccessToken();
+            } else {
                 setIsAuthenticated(true);
-            } catch (error) {
-                console.log(error);
             }
+        } else {
+            await fetchAccessToken();
+        }
+    };
+
+    /**
+     * Access Token 재발급
+     */
+    const fetchAccessToken = async () => {
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/user/refresh`,
+                {},
+                { withCredentials: true },
+            );
+            dispatch(setUserAccessToken(res.data.data));
+            setIsAuthenticated(true);
+        } catch (error) {
+            console.log(error);
         }
     };
 
