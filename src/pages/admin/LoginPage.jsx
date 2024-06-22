@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import { setAccessToken } from '../../store/slice/authSlice';
+import { setAdminAccessToken } from '../../store/slice/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [id, setId] = useState(''); // 아이디
     const [password, setPassword] = useState(''); // 비밀번호
-    const [cookies, setCookie] = useCookies(['refreshToken']);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -27,28 +25,16 @@ const LoginPage = () => {
         }
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/admin/login`, {
-                id,
-                password,
-            });
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/admin/login`,
+                {
+                    id,
+                    password,
+                },
+                { withCredentials: true },
+            );
 
-            // 운영 환경에 따라 쿠키 설정
-            const refreshToken = res.data.data.refreshTokenDto.token;
-            const tokenExpiresIn = new Date(res.data.data.refreshTokenDto.tokenExpiresIn);
-            if (window.location.hostname === 'localhost') {
-                setCookie('refreshToken', refreshToken, {
-                    expires: tokenExpiresIn,
-                });
-            } else {
-                setCookie('refreshToken', refreshToken, {
-                    expires: tokenExpiresIn,
-                    secure: true,
-                    httpOnly: true,
-                    sameSite: 'None',
-                });
-            }
-
-            dispatch(setAccessToken(res.data.data.accessTokenDto.token));
+            dispatch(setAdminAccessToken(res.data.data));
             navigate('/admin/auth');
         } catch (error) {
             await Swal.fire({ icon: 'error', text: error.response.data.message });

@@ -7,8 +7,8 @@ import LoginPage from '../pages/admin/LoginPage';
 import UserLoginPage from '../pages/user/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AuthPage from '../pages/admin/AuthPage';
-import PrivateRoute from './PrivateRoute';
-import NoAuthRoute from './NoAuthRoute';
+import AdminPrivateRoute from './AdminPrivateRoute';
+import AdminNoAuthRoute from './AdminNoAuthRoute';
 import MainPage from '../pages/user/MainPage';
 import UserLayout from '../components/user/UserLayout';
 import ProductsPage from '../pages/user/ProductsPage';
@@ -20,14 +20,14 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<PrivateRoute />}>
+                <Route element={<AdminPrivateRoute />}>
                     <Route element={<AdminLayout />}>
                         <Route path="/admin/product" element={<ProductPage />} />
                         <Route path="/admin/category" element={<CategoryPage />} />
                         <Route path="/admin/auth" element={<AuthPage />} />
                     </Route>
                 </Route>
-                <Route element={<NoAuthRoute />}>
+                <Route element={<AdminNoAuthRoute />}>
                     <Route path="/admin/login" element={<LoginPage />} />
                 </Route>
                 <Route element={<UserLayout />}>

@@ -3,15 +3,19 @@ import { createSlice } from '@reduxjs/toolkit';
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        accessToken: null,
+        adminAccessToken: null,
+        adminExpiresIn: null,
         userAccessToken: null,
+        userExpiresIn: null,
     },
     reducers: {
-        setAccessToken: (state, action) => {
-            state.accessToken = action.payload;
+        setAdminAccessToken: (state, action) => {
+            state.adminAccessToken = action.payload.token;
+            state.adminExpiresIn = action.payload.expiresIn;
         },
-        removeAccessToken: (state) => {
-            state.accessToken = null;
+        removeAdminAccessToken: (state) => {
+            state.adminAccessToken = null;
+            state.adminExpiresIn = null;
         },
         setUserAccessToken: (state, action) => {
             state.userAccessToken = action.payload;
@@ -19,6 +23,7 @@ const authSlice = createSlice({
     },
 });
 
-export const { setAccessToken, removeAccessToken, setUserAccessToken } = authSlice.actions;
+export const { setAdminAccessToken, removeAdminAccessToken, setUserAccessToken } =
+    authSlice.actions;
 
 export default authSlice.reducer;
