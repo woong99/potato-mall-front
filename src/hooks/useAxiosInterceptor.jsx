@@ -8,8 +8,13 @@ const api = axios.create({
     withCredentials: true,
 });
 
+const noAuthApi = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+    withCredentials: true,
+});
+
 const useAxiosInterceptor = () => {
-    const accessToken = useSelector((state) => state.auth.accessToken);
+    const accessToken = useSelector((state) => state.auth.adminAccessToken);
 
     const requestHandler = (config) => {
         config.headers = {
@@ -39,12 +44,18 @@ const useAxiosInterceptor = () => {
         (error) => responseErrorHandler(error),
     );
 
+    const noAuthResponseInterceptor = noAuthApi.interceptors.response.use(
+        (response) => responseHandler(response),
+        (error) => responseErrorHandler(error),
+    );
+
     useEffect(() => {
         return () => {
             api.interceptors.request.eject(requestInterceptor);
             api.interceptors.response.eject(responseInterceptor);
+            noAuthApi.interceptors.response.eject(noAuthResponseInterceptor);
         };
     }, [requestInterceptor]);
 };
 
-export { useAxiosInterceptor, api };
+export { useAxiosInterceptor, api, noAuthApi };
