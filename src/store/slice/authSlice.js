@@ -18,7 +18,8 @@ const authSlice = createSlice({
             state.adminExpiresIn = null;
         },
         setUserAccessToken: (state, action) => {
-            state.userAccessToken = action.payload;
+            state.userAccessToken = action.payload.token;
+            state.userExpiresIn = action.payload.expiresIn;
         },
     },
 });

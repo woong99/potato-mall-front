@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GoHeartFill } from 'react-icons/go';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { api } from '../../hooks/useAxiosInterceptor';
+import { api, userAndNoAuthApi, userApi } from '../../hooks/useAxiosInterceptor';
 import ReactPaginate from 'react-paginate';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
@@ -63,7 +63,7 @@ const ProductsPage = () => {
                 url += `&sortCondition=${sortCondition}`;
             }
 
-            const res = await api.get(url);
+            const res = await userAndNoAuthApi.get(url);
             setProductList(res.data.data.result);
             const totalElementsData = res.data.data.totalElements;
             setTotalElements(totalElementsData);
@@ -126,6 +126,50 @@ const ProductsPage = () => {
             url += `&searchWord=${searchWord}`;
         }
         navigate(url);
+    };
+
+    /**
+     * 상품 좋아요 추가
+     */
+    const addProductLike = async (productId) => {
+        try {
+            const res = await userApi.post(`/api/user/product/${productId}/like`);
+            setProductList((prevProduct) =>
+                prevProduct.map((product) =>
+                    product.productId === productId
+                        ? {
+                              ...product,
+                              isLike: true,
+                              likeCount: res.data.data.likeCount,
+                          }
+                        : product,
+                ),
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    /**
+     * 상품 좋아요 삭제
+     */
+    const removeProductLike = async (productId) => {
+        try {
+            const res = await userApi.delete(`/api/user/product/${productId}/like`);
+            setProductList((prevProduct) =>
+                prevProduct.map((product) =>
+                    product.productId === productId
+                        ? {
+                              ...product,
+                              isLike: false,
+                              likeCount: res.data.data.likeCount,
+                          }
+                        : product,
+                ),
+            );
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -229,7 +273,19 @@ const ProductsPage = () => {
                                 />
                                 <div className="pt-3 flex items-center justify-between">
                                     <p className="">{product.name}</p>
-                                    <GoHeartFill className="w-5 h-5 text-red-600 cursor-pointer" />
+                                    <div className="flex items-center">
+                                        <GoHeartFill
+                                            className={`w-5 h-5 cursor-pointer ${
+                                                product.isLike ? 'text-red-500' : 'text-gray-300'
+                                            }`}
+                                            onClick={() =>
+                                                product.isLike
+                                                    ? removeProductLike(product.productId)
+                                                    : addProductLike(product.productId)
+                                            }
+                                        />
+                                        <span className="ml-1">{product.likeCount}</span>
+                                    </div>
                                 </div>
                                 <p className="pt-1 text-gray-900">
                                     ₩{product.price.toLocaleString()}
