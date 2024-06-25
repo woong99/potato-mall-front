@@ -50,7 +50,7 @@ const ProductsPage = () => {
      */
     const fetchProductList = async (page, searchWord, sortCondition) => {
         try {
-            let url = `/api/product/search?size=8`;
+            let url = `/api/user/product/search?size=8`;
             if (page) {
                 url += `&page=${page - 1}`;
             }
@@ -79,7 +79,9 @@ const ProductsPage = () => {
         if (!searchWord) {
             return;
         }
-        const res = await api.get('api/product/search-with-auto-complete?searchWord=' + searchWord);
+        const res = await api.get(
+            '/api/user/product/search-with-auto-complete?searchWord=' + searchWord,
+        );
         setRelatedTerms(res.data.data.filter((d) => d.name !== searchWord));
     };
 
