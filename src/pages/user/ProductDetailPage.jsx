@@ -1,9 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoHeartFill } from 'react-icons/go';
 import { FaStar } from 'react-icons/fa6';
 import { HiChatBubbleBottomCenterText } from 'react-icons/hi2';
+import { userAndNoAuthApi, userApi } from '../../hooks/useAxiosInterceptor';
+import { useParams } from 'react-router-dom';
 
 const ProductDetailPage = () => {
+    const [product, setProduct] = useState(); // 상품 정보
+    const { id } = useParams();
+
+    useEffect(() => {
+        (async () => {
+            await fetchProduct();
+        })();
+    }, []);
+
+    /**
+     * 상품 정보 조회
+     */
+    const fetchProduct = async () => {
+        try {
+            const res = await userAndNoAuthApi.get(`/api/user/product/${id}`);
+            setProduct(res.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    /**
+     * 상품 좋아요 추가
+     */
+    const addProductLike = async (productId) => {
+        try {
+            const res = await userApi.post(`/api/user/product/${productId}/like`);
+            setProduct((prevProduct) => ({
+                ...prevProduct,
+                isLike: true,
+                likeCount: res.data.data.likeCount,
+            }));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    /**
+     * 상품 좋아요 삭제
+     */
+    const removeProductLike = async (productId) => {
+        try {
+            const res = await userApi.delete(`/api/user/product/${productId}/like`);
+            setProduct((prevProduct) => ({
+                ...prevProduct,
+                isLike: false,
+                likeCount: res.data.data.likeCount,
+            }));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <section className="bg-white py-4">
             <div className="container mx-auto flex flex-col items-center flex-wrap pb-12 px-6">
@@ -11,19 +66,32 @@ const ProductDetailPage = () => {
                     <div className="flex flex-col md:flex-row items-center border p-5 w-full">
                         <img
                             className="hover:grow hover:shadow-lg transition-transform duration-300 ease-in-out md:self-start"
-                            src={'/images/no-img.png'}
+                            src={product?.thumbnailUrl || '/images/no-img.png'}
                             style={{ minWidth: '300px' }}
                             alt="상품 이미지"
                         />
                         <div className="mt-5 md:mt-0 md:ml-10 text-left self-start md:self-center w-full">
                             <div className="flex justify-between">
-                                <div className="text-2xl font-bold mb-2">왕감자</div>
-                                <div className="text-xl text-gray-700 mb-2">₩10,000</div>
+                                <div className="text-2xl font-bold mb-2">{product?.name}</div>
+                                <div className="text-xl text-gray-700 mb-2">
+                                    ₩{product?.price.toLocaleString()}
+                                </div>
                             </div>
-                            <div className="my-2">이것은 왕감자입니다. 아주 맛있습니다.</div>
-                            <div className="flex mt-5 float-right">
-                                <GoHeartFill className="w-5 h-5 text-red-500 cursor-pointer mr-2" />
-                                <p className="text-gray-600 mb-4">좋아요 100개</p>
+                            <div
+                                className="my-2"
+                                dangerouslySetInnerHTML={{ __html: product?.description }}></div>
+                            <div className="flex mt-5 float-right items-center mb-4">
+                                <GoHeartFill
+                                    className={`w-5 h-5 cursor-pointer mr-2 ${
+                                        product?.isLike ? 'text-red-500' : 'text-gray-300'
+                                    }`}
+                                    onClick={() => {
+                                        product?.isLike
+                                            ? removeProductLike(product?.productId)
+                                            : addProductLike(product?.productId);
+                                    }}
+                                />
+                                <p className="text-gray-600">{product?.likeCount}</p>
                             </div>
                             <button className="border px-2 py-2 w-full bg-orange-400 text-black rounded-md border-white">
                                 구매하기
