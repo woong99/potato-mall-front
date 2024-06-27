@@ -184,3 +184,40 @@ input:-webkit-autofill:active {
 }
 
 /* React Paginate E */
+
+/* React skeleton S */
+@-webkit-keyframes skeleton-gradient {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
+
+@keyframes skeleton-gradient {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
+
+/*해당되는 컴포넌트에 적용*/
+.react-loading-skeleton {
+  -webkit-animation: skeleton-gradient 0.5s infinite ease-in-out;
+  animation: skeleton-gradient 0.5s infinite ease-in-out;
+}
+
+/* React skeleton E */
