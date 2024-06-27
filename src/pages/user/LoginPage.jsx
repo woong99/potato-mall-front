@@ -116,13 +116,13 @@ const LoginPage = () => {
                         <button
                             type="button"
                             onClick={login}
-                            className="mt-10 w-full px-5 py-3 text-base font-medium text-center text-white bg-orange-300 rounded-lg hover:bg-orange-400 focus:ring-4 focus:ring-blue-300 sm:w-auto">
+                            className="mt-10 w-full px-5 py-3 text-base font-medium text-center text-white bg-potato-1 rounded-lg hover:bg-potato-2 focus:ring-4 focus:ring-blue-300 sm:w-auto">
                             로그인
                         </button>
                         <button
                             type="button"
                             onClick={() => navigate('/sign-up')}
-                            className="mt-3 w-full px-5 py-3 text-base font-medium text-center text-white bg-orange-300 rounded-lg hover:bg-orange-400 focus:ring-4 focus:ring-blue-300 sm:w-auto">
+                            className="mt-3 w-full px-5 py-3 text-base font-medium text-center text-white bg-potato-1 rounded-lg hover:bg-potato-2 focus:ring-4 focus:ring-blue-300 sm:w-auto">
                             회원가입
                         </button>
                         <div className="flex justify-around mt-6">

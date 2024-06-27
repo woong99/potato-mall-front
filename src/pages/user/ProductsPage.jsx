@@ -103,7 +103,7 @@ const ProductsPage = () => {
 
     return (
         <section className="bg-white py-4">
-            <div className="container mx-auto flex items-center flex-wrap pb-12">
+            <div className="mx-auto flex items-center flex-wrap pb-12">
                 <SearchResult
                     productList={productList}
                     searchWord={searchWord}

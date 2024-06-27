@@ -70,7 +70,7 @@ const Product = ({ productId }) => {
             ) : (
                 <div className="flex flex-col md:flex-row items-center border p-5 w-full lg:h-[400px] justify-center">
                     <img
-                        className="hover:grow hover:shadow-lg transition-transform duration-300 ease-in-out"
+                        className="hover:grow hover:shadow-lg transition-transform duration-300 ease-in-out "
                         src={product?.thumbnailUrl || '/images/no-img.png'}
                         style={{ minWidth: '300px' }}
                         alt="상품 이미지"
@@ -98,7 +98,7 @@ const Product = ({ productId }) => {
                                 <p className="text-gray-600">{product?.likeCount}</p>
                             </div>
                         </div>
-                        <button className="border px-2 py-2 w-full bg-orange-400 text-black rounded-md border-white">
+                        <button className="border px-2 py-2 w-full bg-potato-1 text-white font-bold rounded-md border-white hover:bg-potato-2">
                             구매하기
                         </button>
                     </div>

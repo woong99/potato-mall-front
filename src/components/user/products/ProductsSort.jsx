@@ -43,7 +43,7 @@ const ProductsSort = ({ totalElements, productList, searchWord, sortCondition, i
                 totalElements > 0 &&
                 productList.length > 0 && (
                     <nav className={`w-full z-30 top-0 px-6  h-16 ${searchWord && 'mt-4'}`}>
-                        <div className="container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3 bg-gray-100 rounded-sm h-full">
+                        <div className="mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3 bg-gray-100 rounded-2xl h-full">
                             <div className="flex items-center ml-2 gap-1 md:gap-3 justify-between w-full sm:w-auto">
                                 <button
                                     className={`border px-2 py-1 rounded-3xl text-sm ${
