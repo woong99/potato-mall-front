@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa6';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../../hooks/useAxiosInterceptor';
+import { api } from '../../../hooks/useAxiosInterceptor';
 
 const Header = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -56,7 +56,7 @@ const Header = () => {
         }
 
         const res = await api.get(
-            `/api/product/search-with-auto-complete?searchWord=${searchWord}`,
+            `/api/user/product/search-with-auto-complete?searchWord=${searchWord}`,
         );
         setSuggestions(res.data.data);
     };

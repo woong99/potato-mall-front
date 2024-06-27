@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ReviewSort from './ReviewSort';
 import { HiChatBubbleBottomCenterText } from 'react-icons/hi2';
 import { FaStar } from 'react-icons/fa6';
-import Pagination from '../Pagination';
+import Pagination from '../common/Pagination';
 import { userAndNoAuthApi } from '../../../hooks/useAxiosInterceptor';
+import Skeleton from 'react-loading-skeleton';
+import { fetchWithDelay } from '../../../utils/fetchWithDelayUtils';
 
 const Reviews = ({ productId }) => {
     const [reviews, setReviews] = useState([]); // 리뷰 목록
@@ -12,6 +14,21 @@ const Reviews = ({ productId }) => {
     const [sortCondition, setSortCondition] = useState(''); // 리뷰 정렬 조건
     const [sortDirection, setSortDirection] = useState(''); // 리뷰 정렬 방향
     const [reviewPage, setReviewPage] = useState(0); // 리뷰 페이지
+    const [isLoading, setIsLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(false); // 모바일 여부
+
+    useEffect(() => {
+        // 모바일 여부 확인
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         (async () => {
@@ -24,18 +41,22 @@ const Reviews = ({ productId }) => {
      */
     const fetchReviews = async (page, sortCondition, sortDirection) => {
         try {
-            const res = await userAndNoAuthApi.get('/api/user/review/search', {
-                params: {
-                    productId,
-                    size: 5,
-                    page: page || 0,
-                    sortCondition: sortCondition || '',
-                    sortDirection: sortDirection || '',
-                },
-            });
+            setIsLoading(true);
+            const res = await fetchWithDelay(() =>
+                userAndNoAuthApi.get('/api/user/review/search', {
+                    params: {
+                        productId,
+                        size: 5,
+                        page: page || 0,
+                        sortCondition: sortCondition || '',
+                        sortDirection: sortDirection || '',
+                    },
+                }),
+            );
             setReviews(res.data.data.pageResponseDto.result);
             setReviewCnt(res.data.data.pageResponseDto.totalElements);
             setAverageScore(res.data.data.averageScore);
+            setIsLoading(false);
         } catch (error) {
             console.error(error);
         }
@@ -93,65 +114,79 @@ const Reviews = ({ productId }) => {
         <div className="flex flex-col border p-5 w-full mt-6">
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-xl font-bold">리뷰</h1>
-                {reviewCnt > 0 && (
-                    <ReviewSort
-                        sortCondition={sortCondition}
-                        sortDirection={sortDirection}
-                        handleChangeSort={handleChangeSort}
-                    />
-                )}
-            </div>
-            <div className="bg-gray-100 flex justify-around rounded py-2">
-                <div className="flex flex-col items-center">
-                    <p className="pt-3 font-black text-sm">사용자 총 평점</p>
-                    <div className="flex items-center text-center mt-2">
-                        {getBigStar(averageScore)}
-                    </div>
-                    <div className="mt-3 text-3xl font-bold">
-                        <p>
-                            {averageScore} <span className="text-gray-300">/ 5</span>
-                        </p>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center">
-                    <p className="pt-3 font-black text-sm">전체 리뷰수</p>
-                    <div className="flex flex-col items-center text-center mt-2">
-                        <HiChatBubbleBottomCenterText className="text-3xl text-gray-300" />
-                        <p className="mt-3 text-3xl font-bold">{reviewCnt}</p>
-                    </div>
-                </div>
-            </div>
-            <div className="box-content mt-4">
-                {reviews.length === 0 ? (
-                    <div className="h-[150px] flex items-center justify-center text-lg font-bold">
-                        등록된 리뷰가 없습니다.
-                    </div>
+                {isLoading ? (
+                    <Skeleton containerClassName="h-full" width={isMobile ? '100px' : '250px'} />
                 ) : (
-                    reviews.map((review) => (
-                        <div className="border-b py-3" key={review.reviewId}>
-                            <div className="flex items-center text-center">
-                                {getStar(review.score)}
-                                <p
-                                    className="font-bold text-lg ml-1"
-                                    style={{ lineHeight: '15px' }}>
-                                    {review.score}
-                                </p>
-                            </div>
-                            <div className="flex items-center text-gray-500 mt-2">
-                                <p className="border-r pr-2">{review.nickname}</p>
-                                <p className="pl-2">{review.createdAt}</p>
-                            </div>
-                            <p className="text-gray-700 mt-5">{review.contents}</p>
-                        </div>
-                    ))
+                    reviewCnt > 0 && (
+                        <ReviewSort
+                            sortCondition={sortCondition}
+                            sortDirection={sortDirection}
+                            handleChangeSort={handleChangeSort}
+                        />
+                    )
                 )}
             </div>
-            {reviewCnt > 0 && (
-                <Pagination
-                    pageCount={reviewCnt / 5}
-                    handleChangePage={handleChangePage}
-                    nowPage={reviewPage}
-                />
+            {isLoading ? (
+                <Skeleton height={'140px'} />
+            ) : (
+                <div className="bg-gray-100 flex justify-around rounded py-2 h-[140px] ">
+                    <div className="flex flex-col items-center">
+                        <p className="pt-3 font-black text-sm">사용자 총 평점</p>
+                        <div className="flex items-center text-center mt-2">
+                            {getBigStar(averageScore)}
+                        </div>
+                        <div className="mt-3 text-3xl font-bold">
+                            <p>
+                                {averageScore} <span className="text-gray-300">/ 5</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center">
+                        <p className="pt-3 font-black text-sm">전체 리뷰수</p>
+                        <div className="flex flex-col items-center text-center mt-2">
+                            <HiChatBubbleBottomCenterText className="text-3xl text-gray-300" />
+                            <p className="mt-3 text-3xl font-bold">{reviewCnt}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {isLoading ? (
+                <Skeleton height={'500px'} />
+            ) : (
+                <>
+                    <div className="box-content mt-4">
+                        {reviews.length === 0 ? (
+                            <div className="h-[150px] flex items-center justify-center text-lg font-bold">
+                                등록된 리뷰가 없습니다.
+                            </div>
+                        ) : (
+                            reviews.map((review) => (
+                                <div className="border-b py-3" key={review.reviewId}>
+                                    <div className="flex items-center text-center">
+                                        {getStar(review.score)}
+                                        <p
+                                            className="font-bold text-lg ml-1"
+                                            style={{ lineHeight: '15px' }}>
+                                            {review.score}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center text-gray-500 mt-2">
+                                        <p className="border-r pr-2">{review.nickname}</p>
+                                        <p className="pl-2">{review.createdAt}</p>
+                                    </div>
+                                    <p className="text-gray-700 mt-5">{review.contents}</p>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    {reviewCnt > 0 && (
+                        <Pagination
+                            pageCount={Math.ceil(reviewCnt / 5)}
+                            handleChangePage={handleChangePage}
+                            nowPage={reviewPage}
+                        />
+                    )}
+                </>
             )}
         </div>
     );

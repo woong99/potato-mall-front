@@ -1,7 +1,7 @@
 import React from 'react';
-import MainVisual from '../../components/user/MainVisual';
-import TopSales from '../../components/user/TopSales';
-import TopSearch from '../../components/user/TopSearch';
+import MainVisual from '../../components/user/main/MainVisual';
+import TopSales from '../../components/user/main/TopSales';
+import TopSearch from '../../components/user/main/TopSearch';
 
 const MainPage = () => {
     return (

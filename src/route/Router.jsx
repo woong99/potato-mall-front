@@ -10,7 +10,7 @@ import AuthPage from '../pages/admin/AuthPage';
 import AdminPrivateRoute from './AdminPrivateRoute';
 import AdminNoAuthRoute from './AdminNoAuthRoute';
 import MainPage from '../pages/user/MainPage';
-import UserLayout from '../components/user/UserLayout';
+import UserLayout from '../components/user/layout/UserLayout';
 import ProductsPage from '../pages/user/ProductsPage';
 import ProductDetailPage from '../pages/user/ProductDetailPage';
 import OAuth2LoginSuccessPage from '../pages/user/OAuth2LoginSuccessPage';

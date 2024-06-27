@@ -2,9 +2,9 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
-const Pagination = ({ pageCount, handleChangePage, nowPage }) => {
+const Pagination = ({ pageCount, handleChangePage, nowPage, pageRangeDisplayed }) => {
     return (
-        <div className="flex items-center justify-center border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+        <div className="flex items-center justify-center bg-white px-4 py-3 sm:px-6">
             <ReactPaginate
                 previousLabel={<ChevronLeftIcon className="w-5 h-5" />}
                 previousClassName="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
@@ -20,6 +20,7 @@ const Pagination = ({ pageCount, handleChangePage, nowPage }) => {
                     await handleChangePage(page);
                 }}
                 forcePage={nowPage}
+                pageRangeDisplayed={pageRangeDisplayed}
             />
         </div>
     );
