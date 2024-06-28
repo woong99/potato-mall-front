@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../../hooks/useAxiosInterceptor';
 import DesktopSearchBar from './DesktopSearchBar';
 import MobileSearchBar from './MobileSearchBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeUserAccessToken } from '../../../store/slice/authSlice';
 
 const Header = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -10,6 +12,8 @@ const Header = () => {
     const [searchWord, setSearchWord] = useState(''); // 검색어
     const [isComposing, setIsComposing] = useState(false); // 컴포징을 위한 상태
     const [suggestions, setSuggestions] = useState([]); // 검색어 추천 목록
+    const isUserAuthenticated = useSelector((state) => state.auth.isUserAuthenticated);
+    const dispatch = useDispatch();
 
     /**
      * 검색 input focus 이벤트 처리
@@ -71,6 +75,19 @@ const Header = () => {
         setSuggestions([]);
     };
 
+    /**
+     * 로그아웃
+     */
+    const logout = async () => {
+        try {
+            await api.post('/api/user/logout');
+            dispatch(removeUserAccessToken());
+            navigate('/login');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <nav id="header" className="w-full z-30 top-0">
             <div className="w-full flex justify-end bg-potato-1 py-5">
@@ -80,11 +97,19 @@ const Header = () => {
                         className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]">
                         전체 상품
                     </Link>
-                    <Link
-                        to={'/login'}
-                        className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]">
-                        로그인
-                    </Link>
+                    {isUserAuthenticated ? (
+                        <button
+                            className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]"
+                            onClick={logout}>
+                            로그아웃
+                        </button>
+                    ) : (
+                        <Link
+                            to={'/login'}
+                            className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]">
+                            로그인
+                        </Link>
+                    )}
                     <Link
                         to={'/'}
                         className="px-4 text-lg text-amber-200 font-bold  hover:underline decoration-[3px]">

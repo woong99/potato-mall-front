@@ -7,6 +7,7 @@ const authSlice = createSlice({
         adminExpiresIn: null,
         userAccessToken: null,
         userExpiresIn: null,
+        isUserAuthenticated: false,
     },
     reducers: {
         setAdminAccessToken: (state, action) => {
@@ -21,10 +22,22 @@ const authSlice = createSlice({
             state.userAccessToken = action.payload.token;
             state.userExpiresIn = action.payload.expiresIn;
         },
+        removeUserAccessToken: (state) => {
+            state.userAccessToken = null;
+            state.userExpiresIn = null;
+        },
+        setUserAuthenticated: (state, action) => {
+            state.isUserAuthenticated = action.payload;
+        },
     },
 });
 
-export const { setAdminAccessToken, removeAdminAccessToken, setUserAccessToken } =
-    authSlice.actions;
+export const {
+    setAdminAccessToken,
+    removeAdminAccessToken,
+    setUserAccessToken,
+    removeUserAccessToken,
+    setUserAuthenticated,
+} = authSlice.actions;
 
 export default authSlice.reducer;

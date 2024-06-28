@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setUserAccessToken, setUserAuthenticated } from '../store/slice/authSlice';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
-const UserNoAuthRoute = () => {
+const UserPublicRoute = () => {
     const accessToken = useSelector((state) => state.auth.userAccessToken);
     const expiresIn = useSelector((state) => state.auth.userExpiresIn);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,7 +25,6 @@ const UserNoAuthRoute = () => {
             if (tokenExpireTime < currentTime) {
                 await fetchAccessToken();
             } else {
-                setIsAuthenticated(true);
                 dispatch(setUserAuthenticated(true));
             }
         } else {
@@ -45,14 +43,13 @@ const UserNoAuthRoute = () => {
                 { withCredentials: true },
             );
             dispatch(setUserAccessToken(res.data.data));
-            setIsAuthenticated(true);
             dispatch(setUserAuthenticated(true));
         } catch (error) {
             console.log(error);
         }
     };
 
-    return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
+    return <Outlet />;
 };
 
-export default UserNoAuthRoute;
+export default UserPublicRoute;
