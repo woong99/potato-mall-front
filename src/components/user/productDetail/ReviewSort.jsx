@@ -1,26 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RiCheckFill } from 'react-icons/ri';
 import Dropdown from './Dropdown';
 
 const ReviewSort = ({ sortCondition, sortDirection, handleChangeSort }) => {
-    const [selectedOption, setSelectedOption] = useState('');
     const selectOptions = [
         { value: '', label: '최신순' },
-        { value: 'highScore', label: '평점 높은 순' },
-        { value: 'lowScore', label: '평점 낮은 순' },
+        { value: 'scoreDESCENDING', label: '평점 높은 순' },
+        { value: 'scoreASCENDING', label: '평점 낮은 순' },
     ];
 
     const handleSort = (value) => {
-        if (selectedOption === value) {
-            return;
-        }
-
-        setSelectedOption(value);
         if (value === '') {
             handleChangeSort('', '');
-        } else if (value === 'highScore') {
+        } else if (value === 'scoreDESCENDING') {
             handleChangeSort('score', 'DESCENDING');
-        } else if (value === 'lowScore') {
+        } else if (value === 'scoreASCENDING') {
             handleChangeSort('score', 'ASCENDING');
         }
     };
@@ -78,7 +72,7 @@ const ReviewSort = ({ sortCondition, sortDirection, handleChangeSort }) => {
             <div className="md:hidden w-full">
                 <Dropdown
                     options={selectOptions}
-                    selectedOption={selectedOption}
+                    selectedOption={sortCondition + sortDirection}
                     onOptionSelect={(option) => {
                         handleSort(option.value);
                     }}

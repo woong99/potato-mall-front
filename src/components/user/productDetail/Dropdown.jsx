@@ -47,9 +47,11 @@ const Dropdown = ({ options, selectedOption, onOptionSelect }) => {
                                 <button
                                     key={option.value}
                                     className={`${
-                                        selectedOption === option.label ? 'font-bold' : ''
+                                        selectedOption === option.value ? 'font-bold' : ''
                                     } text-gray-700 block px-4 py-2 text-sm w-full text-left whitespace-nowrap hover:bg-gray-100`}
-                                    onClick={() => handleOptionClick(option)}>
+                                    onClick={() =>
+                                        selectedOption !== option.value && handleOptionClick(option)
+                                    }>
                                     {option.label}
                                 </button>
                             ))}
