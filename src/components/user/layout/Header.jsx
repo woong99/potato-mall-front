@@ -112,27 +112,29 @@ const Header = () => {
     return (
         <nav id="header" className="w-full z-30 top-0">
             <div className="w-full flex justify-end bg-potato-1 py-5">
-                <div className="md:flex items-center justify-between text-base pr-4 md:pt-0 ">
+                <div className="flex items-center justify-between text-base pr-4 md:pt-0 ">
                     <Link
                         to={'/products'}
-                        className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]">
+                        className="px-2 md:px-4 md:text-lg text-white font-bold  hover:underline decoration-[3px]">
                         전체 상품
                     </Link>
                     {isUserAuthenticated ? (
                         <button
-                            className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]"
+                            className="px-2 md:px-4 md:text-lg text-white font-bold  hover:underline decoration-[3px]"
                             onClick={logout}>
                             로그아웃
                         </button>
                     ) : (
                         <Link
                             to={'/login'}
-                            className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]">
+                            className="px-2 md:px-4 md:text-lg text-white font-bold  hover:underline decoration-[3px]">
                             로그인
                         </Link>
                     )}
                     {isUserAuthenticated && (
-                        <Link to={'/cart'} className="px-4 text-lg text-white font-bold ">
+                        <Link
+                            to={'/cart'}
+                            className="px-2 md:px-4 md:text-lg text-white font-bold ">
                             <div className="flex items-center">
                                 <p className="hover:underline decoration-[3px]">장바구니</p>
                                 <div className="ml-1 bg-amber-700 w-6 h-6 text-center leading-6 rounded-full text-sm text-white">
@@ -143,7 +145,7 @@ const Header = () => {
                     )}
                     <Link
                         to={'/'}
-                        className="px-4 text-lg text-amber-200 font-bold  hover:underline decoration-[3px]">
+                        className="px-2 md:px-4 md:text-lg text-amber-200 font-bold  hover:underline decoration-[3px]">
                         마이페이지
                     </Link>
                 </div>
