@@ -3,6 +3,7 @@ import { GoHeartFill } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
 import { userApi } from '../../../hooks/useAxiosInterceptor';
 import Skeleton from 'react-loading-skeleton';
+import { TbMessage2 } from 'react-icons/tb';
 
 const Products = ({ productList, setProductList, isLoading }) => {
     const navigate = useNavigate();
@@ -63,7 +64,10 @@ const Products = ({ productList, setProductList, isLoading }) => {
                                     <Skeleton height={20} width={200} />
                                     <Skeleton height={20} width={20} />
                                 </div>
-                                <Skeleton height={20} width={200} />
+                                <div className="flex items-center justify-between">
+                                    <Skeleton height={20} width={200} />
+                                    <Skeleton height={20} width={20} />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,9 +101,15 @@ const Products = ({ productList, setProductList, isLoading }) => {
                                         <span className="ml-1">{product.likeCount}</span>
                                     </div>
                                 </div>
-                                <p className="pt-1 text-gray-900">
-                                    ₩{product.price.toLocaleString()}
-                                </p>
+                                <div className="pt-1 flex items-center justify-between">
+                                    <p className="text-gray-900">
+                                        ₩{product.price.toLocaleString()}
+                                    </p>
+                                    <div className="flex items-center">
+                                        <TbMessage2 className="w-5 h-5" />
+                                        <span className="ml-1">{product.reviewCount}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
