@@ -111,7 +111,7 @@ const Reviews = ({ productId }) => {
     };
 
     return (
-        <div className="flex flex-col border p-5 w-full mt-6">
+        <div className="flex flex-col border p-5 w-full mt-6 rounded">
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-xl font-bold">리뷰</h1>
                 {isLoading ? (

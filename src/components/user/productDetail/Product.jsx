@@ -3,10 +3,17 @@ import { GoHeartFill } from 'react-icons/go';
 import { userAndNoAuthApi, userApi } from '../../../hooks/useAxiosInterceptor';
 import Skeleton from 'react-loading-skeleton';
 import { fetchWithDelay } from '../../../utils/fetchWithDelayUtils';
+import QuantityButton from './QuantityButton';
+import PriceResult from './PriceResult';
+import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { setCartCount } from '../../../store/slice/authSlice';
 
 const Product = ({ productId }) => {
     const [product, setProduct] = useState(); // 상품 정보
     const [isLoading, setIsLoading] = useState(true);
+    const [quantity, setQuantity] = useState(1);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
@@ -61,14 +68,32 @@ const Product = ({ productId }) => {
             console.error(error);
         }
     };
+
+    /**
+     * 장바구니 추가
+     */
+    const addCart = async () => {
+        try {
+            await userApi.post('/api/user/shopping-cart', {
+                productId: product.productId,
+                quantity,
+            });
+            const res = await userApi.get('/api/user/shopping-cart/me/items-count');
+            dispatch(setCartCount(res.data.data));
+        } catch (error) {
+            console.error(error);
+        }
+        await Swal.fire({ icon: 'success', title: '장바구니에 추가되었습니다.' });
+    };
+
     return (
         <>
             {isLoading ? (
-                <div className="flex w-full">
+                <div className="flex w-full rounded">
                     <Skeleton containerClassName="w-full" className="h-[400px] w-3/5" />
                 </div>
             ) : (
-                <div className="flex flex-col md:flex-row items-center border p-5 w-full lg:h-[400px] justify-center">
+                <div className="flex flex-col md:flex-row items-center border p-5 w-full lg:h-[400px] justify-center rounded">
                     <img
                         className="hover:grow hover:shadow-lg transition-transform duration-300 ease-in-out "
                         src={product?.thumbnailUrl || '/images/no-img.png'}
@@ -77,10 +102,7 @@ const Product = ({ productId }) => {
                     />
                     <div className="mt-5 md:mt-0 md:ml-10 text-left self-start md:self-center w-full">
                         <div className="text-2xl font-bold mb-3">{product?.name}</div>
-                        <div
-                            className="my-2"
-                            dangerouslySetInnerHTML={{ __html: product?.description }}></div>
-                        <div className="flex items-center justify-between mt-2 mb-2">
+                        <div className="flex items-center justify-between mt-3 mb-2">
                             <div className="text-xl text-gray-700">
                                 ₩{product?.price.toLocaleString()}
                             </div>
@@ -98,9 +120,25 @@ const Product = ({ productId }) => {
                                 <p className="text-gray-600">{product?.likeCount}</p>
                             </div>
                         </div>
-                        <button className="border px-2 py-2 w-full bg-potato-1 text-white font-bold rounded-md border-white hover:bg-potato-2">
-                            구매하기
-                        </button>
+
+                        <QuantityButton
+                            quantity={quantity}
+                            setQuantity={setQuantity}
+                            stockQuantity={product.stockQuantity}
+                        />
+
+                        <PriceResult price={product.price} quantity={quantity} />
+
+                        <div className="flex mt-5">
+                            <button
+                                className="border px-2 py-2 w-full bg-white text-potato-1 border-potato-1 font-bold rounded-md hover:bg-potato-2 hover:text-white"
+                                onClick={addCart}>
+                                장바구니
+                            </button>
+                            <button className="border px-2 py-2 w-full bg-potato-1 text-white font-bold rounded-md border-white ml-2 hover:bg-potato-2">
+                                구매하기
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

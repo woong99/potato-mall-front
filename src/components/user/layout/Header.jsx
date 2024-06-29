@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../../../hooks/useAxiosInterceptor';
+import { api, userApi } from '../../../hooks/useAxiosInterceptor';
 import DesktopSearchBar from './DesktopSearchBar';
 import MobileSearchBar from './MobileSearchBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeUserAccessToken } from '../../../store/slice/authSlice';
+import { removeUserAccessToken, setCartCount } from '../../../store/slice/authSlice';
 
 const Header = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -13,7 +13,14 @@ const Header = () => {
     const [isComposing, setIsComposing] = useState(false); // 컴포징을 위한 상태
     const [suggestions, setSuggestions] = useState([]); // 검색어 추천 목록
     const isUserAuthenticated = useSelector((state) => state.auth.isUserAuthenticated);
+    const cartCount = useSelector((state) => state.auth.cartCount);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        (async () => {
+            await fetchCartCount();
+        })();
+    }, [isUserAuthenticated]);
 
     /**
      * 검색 input focus 이벤트 처리
@@ -88,6 +95,20 @@ const Header = () => {
         }
     };
 
+    /**
+     * 장바구니 상품 개수 조회
+     */
+    const fetchCartCount = async () => {
+        if (isUserAuthenticated) {
+            try {
+                const res = await userApi.get('/api/user/shopping-cart/me/items-count');
+                dispatch(setCartCount(res.data.data));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
     return (
         <nav id="header" className="w-full z-30 top-0">
             <div className="w-full flex justify-end bg-potato-1 py-5">
@@ -108,6 +129,16 @@ const Header = () => {
                             to={'/login'}
                             className="px-4 text-lg text-white font-bold  hover:underline decoration-[3px]">
                             로그인
+                        </Link>
+                    )}
+                    {isUserAuthenticated && (
+                        <Link to={'/cart'} className="px-4 text-lg text-white font-bold ">
+                            <div className="flex items-center">
+                                <p className="hover:underline decoration-[3px]">장바구니</p>
+                                <div className="ml-1 bg-amber-700 w-6 h-6 text-center leading-6 rounded-full text-sm text-white">
+                                    {cartCount}
+                                </div>
+                            </div>
                         </Link>
                     )}
                     <Link

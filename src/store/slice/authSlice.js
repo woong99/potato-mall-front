@@ -8,6 +8,7 @@ const authSlice = createSlice({
         userAccessToken: null,
         userExpiresIn: null,
         isUserAuthenticated: false,
+        cartCount: 0,
     },
     reducers: {
         setAdminAccessToken: (state, action) => {
@@ -29,6 +30,9 @@ const authSlice = createSlice({
         setUserAuthenticated: (state, action) => {
             state.isUserAuthenticated = action.payload;
         },
+        setCartCount: (state, action) => {
+            state.cartCount = action.payload;
+        },
     },
 });
 
@@ -38,6 +42,7 @@ export const {
     setUserAccessToken,
     removeUserAccessToken,
     setUserAuthenticated,
+    setCartCount,
 } = authSlice.actions;
 
 export default authSlice.reducer;
