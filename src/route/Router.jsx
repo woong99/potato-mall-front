@@ -17,6 +17,8 @@ import OAuth2LoginSuccessPage from '../pages/user/OAuth2LoginSuccessPage';
 import UserNoAuthRoute from './UserNoAuthRoute';
 import SignUpPage from '../pages/user/SignUpPage';
 import UserPublicRoute from './UserPublicRoute';
+import UserPrivateRoute from './UserPrivateRoute';
+import CartPage from '../pages/user/CartPage';
 
 const Router = () => {
     return (
@@ -32,11 +34,14 @@ const Router = () => {
                 <Route element={<AdminNoAuthRoute />}>
                     <Route path="/admin/login" element={<LoginPage />} />
                 </Route>
-                <Route element={<UserPublicRoute />}>
-                    <Route element={<UserLayout />}>
+                <Route element={<UserLayout />}>
+                    <Route element={<UserPublicRoute />}>
                         <Route path="/" element={<MainPage />} />
                         <Route path="/products" element={<ProductsPage />} />
                         <Route path="/product/:id" element={<ProductDetailPage />} />
+                    </Route>
+                    <Route element={<UserPrivateRoute />}>
+                        <Route path="/cart" element={<CartPage />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />

@@ -125,6 +125,7 @@ const Product = ({ productId }) => {
                             quantity={quantity}
                             setQuantity={setQuantity}
                             stockQuantity={product.stockQuantity}
+                            className={'border-b-2'}
                         />
 
                         <PriceResult price={product.price} quantity={quantity} />

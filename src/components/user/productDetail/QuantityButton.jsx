@@ -1,9 +1,9 @@
 import React from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 
-const QuantityButton = ({ quantity, setQuantity, stockQuantity }) => {
+const QuantityButton = ({ quantity, setQuantity, stockQuantity, className }) => {
     return (
-        <div className="flex items-center mt-3 pb-3 border-b-2">
+        <div className={`flex items-center mt-3 pb-3 ${className}`}>
             <button
                 className={`${
                     quantity <= 1 && 'cursor-not-allowed'
