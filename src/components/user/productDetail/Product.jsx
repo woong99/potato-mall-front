@@ -151,9 +151,6 @@ const Product = ({ productId }) => {
             <PayModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
-                price={quantity * product?.price}
-                product={product}
-                quantity={quantity}
                 productInfos={[
                     {
                         price: quantity * product?.price,
@@ -161,6 +158,8 @@ const Product = ({ productId }) => {
                         quantity: quantity,
                     },
                 ]}
+                price={quantity * product?.price}
+                productName={product?.name}
             />
         </>
     );
