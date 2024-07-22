@@ -6,11 +6,13 @@ import Swal from 'sweetalert2';
 import { setCartCount } from '../../../store/slice/authSlice';
 import { useDispatch } from 'react-redux';
 import QuantityButton from '../productDetail/QuantityButton';
+import PayModal from '../productDetail/PayModal';
 
 const Cart = ({ cart, setCartList, className, fetchCartList }) => {
     const { product, quantity, shoppingCartId, isChecked } = cart;
     const [isUpdate, setIsUpdate] = useState(false);
     const [modifyQuantity, setModifyQuantity] = useState(quantity);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
 
     /**
@@ -156,11 +158,26 @@ const Cart = ({ cart, setCartList, className, fetchCartList }) => {
                     <p className="text-lg text-black font-bold whitespace-nowrap">
                         {(product.price * quantity).toLocaleString()}원
                     </p>
-                    <button className="mt-2 rounded border-2 border-potato-1 text-white font-bold bg-potato-1 p-1 hover:bg-potato-2">
+                    <button
+                        className="mt-2 rounded border-2 border-potato-1 text-white font-bold bg-potato-1 p-1 hover:bg-potato-2"
+                        onClick={() => setIsModalOpen(true)}>
                         주문하기
                     </button>
                 </div>
             </div>
+            <PayModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                productInfos={[
+                    {
+                        productId: product.productId,
+                        quantity: modifyQuantity,
+                        shoppingCartId,
+                    },
+                ]}
+                price={product.price * modifyQuantity}
+                productName={product.name}
+            />
         </div>
     );
 };

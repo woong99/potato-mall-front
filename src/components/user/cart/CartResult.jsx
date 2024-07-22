@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CartResult = ({ cartList }) => {
+const CartResult = ({ cartList, setIsModelOpen }) => {
     /**
      * 체크된 장바구니 수량
      */
@@ -27,7 +27,8 @@ const CartResult = ({ cartList }) => {
                     checkedCartCount > 0
                         ? 'bg-potato-1 hover:bg-potato-2 cursor-pointer'
                         : 'bg-gray-300 cursor-not-allowed'
-                }`}>
+                }`}
+                onClick={() => setIsModelOpen(true)}>
                 {checkedCartCount}건 주문하기
             </button>
         </div>

@@ -19,6 +19,7 @@ import SignUpPage from '../pages/user/SignUpPage';
 import UserPublicRoute from './UserPublicRoute';
 import UserPrivateRoute from './UserPrivateRoute';
 import CartPage from '../pages/user/CartPage';
+import PaySuccessPage from '../pages/user/PaySuccessPage';
 
 const Router = () => {
     return (
@@ -42,6 +43,7 @@ const Router = () => {
                     </Route>
                     <Route element={<UserPrivateRoute />}>
                         <Route path="/cart" element={<CartPage />} />
+                        <Route path="/pay/success" element={<PaySuccessPage />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />

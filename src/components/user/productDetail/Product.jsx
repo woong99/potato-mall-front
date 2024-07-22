@@ -8,11 +8,13 @@ import PriceResult from './PriceResult';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { setCartCount } from '../../../store/slice/authSlice';
+import PayModal from './PayModal';
 
 const Product = ({ productId }) => {
     const [product, setProduct] = useState(); // 상품 정보
     const [isLoading, setIsLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -136,13 +138,30 @@ const Product = ({ productId }) => {
                                 onClick={addCart}>
                                 장바구니
                             </button>
-                            <button className="border px-2 py-2 w-full bg-potato-1 text-white font-bold rounded-md border-white ml-2 hover:bg-potato-2">
+                            <button
+                                className="border px-2 py-2 w-full bg-potato-1 text-white font-bold rounded-md border-white ml-2 hover:bg-potato-2"
+                                onClick={() => setIsModalOpen(true)}>
                                 구매하기
                             </button>
                         </div>
                     </div>
                 </div>
             )}
+
+            <PayModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                price={quantity * product?.price}
+                product={product}
+                quantity={quantity}
+                productInfos={[
+                    {
+                        price: quantity * product?.price,
+                        productId: product?.productId,
+                        quantity: quantity,
+                    },
+                ]}
+            />
         </>
     );
 };

@@ -6,10 +6,12 @@ import { fetchWithDelay } from '../../utils/fetchWithDelayUtils';
 import NoCart from '../../components/user/cart/NoCart';
 import TopCheckBox from '../../components/user/cart/TopCheckBox';
 import CartResult from '../../components/user/cart/CartResult';
+import PayModal from '../../components/user/productDetail/PayModal';
 
 const CartPage = () => {
     const [cartList, setCartList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -33,6 +35,8 @@ const CartPage = () => {
             console.error(error);
         }
     };
+
+    console.log(cartList);
 
     return (
         <section className="bg-white py-4">
@@ -63,10 +67,14 @@ const CartPage = () => {
                                                 index === cartList.length - 1 && 'border-b-2'
                                             } border-t-2`}
                                             key={cart.shoppingCartId}
+                                            setIsModalOpen={setIsModalOpen}
                                         />
                                     ))}
 
-                                    <CartResult cartList={cartList} />
+                                    <CartResult
+                                        cartList={cartList}
+                                        setIsModelOpen={setIsModalOpen}
+                                    />
                                 </div>
                             ) : (
                                 <NoCart />
@@ -75,6 +83,24 @@ const CartPage = () => {
                     )}
                 </div>
             </div>
+            <PayModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                productInfos={cartList
+                    .filter((cart) => cart.isChecked)
+                    .map((cart) => ({
+                        productId: cart.product.productId,
+                        quantity: cart.quantity,
+                        shoppingCartId: cart.shoppingCartId,
+                    }))}
+                price={cartList
+                    .filter((cart) => cart.isChecked)
+                    .reduce((acc, cur) => acc + cur.product.price * cur.quantity, 0)}
+                productName={cartList
+                    .filter((cart) => cart.isChecked)
+                    .map((cart) => cart.product.name)
+                    .join(', ')}
+            />
         </section>
     );
 };
